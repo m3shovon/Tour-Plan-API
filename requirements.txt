@@ -1,0 +1,30 @@
+# Project
+Django
+# for .env
+python-decouple
+# PostgreSQL Database
+# psycopg2==2.9.7
+psycopg2==2.9.9
+psycopg2-binary
+
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+django-filter==21.1
+
+# Image Upload
+pillow
+
+# UI Interface
+django-jazzmin
+django-cache-cleaner
+django-admin-interface
+# Django CKEditor For Blog
+# django-ckeditor
+
+# djangorestframework-authtoken
+
+# ++++++ Hide Admin ++++++++
+django-hide-admin
+
+# ++++++++++ SEO ++++++++++
