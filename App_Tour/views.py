@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
-from .models import TourProgram, Participant
-from .serializers import TourProgramSerializer, ParticipantSerializer
+from .models import TourProgram, Participant, ParticipantBudget
+from .serializers import TourProgramSerializer, ParticipantSerializer, ParticipantBudgetSerializer
 
 class TourProgramViewSet(ModelViewSet):
     queryset = TourProgram.objects.all()
@@ -14,4 +14,9 @@ class TourProgramViewSet(ModelViewSet):
 class ParticipantViewSet(ModelViewSet):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
+    permission_classes = [IsAuthenticated]
+
+class ParticipantBudgetViewSet(ModelViewSet):
+    queryset = ParticipantBudget.objects.all()
+    serializer_class = ParticipantBudgetSerializer
     permission_classes = [IsAuthenticated]

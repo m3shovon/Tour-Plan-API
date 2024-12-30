@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
@@ -12,14 +12,14 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
 
     def get_permissions(self):
-        if self.action in ['signup', 'login']:
+        if self.action in ['register', 'login']:
             return [AllowAny()]
-        return [IsAuthenticated()]
+        return [IsAuthenticatedOrReadOnly()]
 
     @action(detail=False, methods=['post'], permission_classes=[AllowAny])
     def register(self, request):
         """
-        Custom signup action for user registration.
+        Custom register action for user registration.
         """
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -46,6 +46,7 @@ class UserViewSet(ModelViewSet):
             if user.check_password(password):
                 refresh = RefreshToken.for_user(user)
                 return Response({
+                    'user': UserSerializer(user).data,
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
                 }, status=status.HTTP_200_OK)

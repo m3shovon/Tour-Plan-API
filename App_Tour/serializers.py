@@ -1,10 +1,17 @@
 from rest_framework import serializers
-from .models import TourProgram, Participant
+from .models import TourProgram, Participant, ParticipantBudget
+
+class ParticipantBudgetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ParticipantBudget
+        fields = ['id', 'participant', 'amount', 'payment_date']
 
 class ParticipantSerializer(serializers.ModelSerializer):
+    payments = ParticipantBudgetSerializer(many=True, read_only=True)
+
     class Meta:
         model = Participant
-        fields = ['id', 'tour', 'user', 'amount_paid']
+        fields = ['id', 'tour', 'name', 'email', 'total_share', 'amount_paid', 'payments']
 
 class TourProgramSerializer(serializers.ModelSerializer):
     participants = ParticipantSerializer(many=True, read_only=True)
